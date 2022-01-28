@@ -185,6 +185,38 @@ function formatC (d, precisionOrFormat) {
 }
 
 /**
+ * Format the sign of a number.
+ *
+ * @exampleContext {"lang":"en-us"}
+ * @example ["10"          ]
+ * @example ["1000.456"    ]
+ *
+ * @param  {Number} d          Number to format
+ * @param  {Number} precision  Number of decimals
+ * @param  {String} positive   The sign to put before a positive number.
+ * @param  {String} negative   The sign to put before a negative number.
+ *
+ * @return {String} return     converted values
+ */
+function formatNSign (d, precision, positive, negative) {
+  if ((d === null) || ((typeof d) === 'undefined')) {
+    return d;
+  }
+  if (((typeof positive) !== 'string') || ((typeof negative) !== 'string')) {
+    return d;
+  }
+  const _locale = locale[this.lang] || locale.en;
+  const numberString = _format(d, _locale.number, precision);
+  if (d > 0) {
+    return `${positive}${numberString}`;
+  }
+  if (d < 0) {
+    return numberString.replace('-', negative);
+  }
+  return numberString;
+}
+
+/**
  * Add two numbers
  *
  * @version 1.2.0
@@ -257,14 +289,15 @@ function div (d, value) {
 }
 
 module.exports = {
-  formatN  : formatN,
-  formatC  : formatC,
-  convCurr : convCurr,
-  round    : round,
-  add      : add,
-  sub      : sub,
-  mul      : mul,
-  div      : div,
+  formatN     : formatN,
+  formatC     : formatC,
+  formatNSign : formatNSign,
+  convCurr    : convCurr,
+  round       : round,
+  add         : add,
+  sub         : sub,
+  mul         : mul,
+  div         : div,
 
   /**
    * Converts a number to an INT

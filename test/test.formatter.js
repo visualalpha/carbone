@@ -1321,6 +1321,20 @@ describe('formatter', function () {
     });
   });
 
+  describe('formatNSign', function () {
+    const options = {lang : 'en-us'};
+    it('should be able to apply custom positive and negative signs', function () {
+      helper.assert(numberFormatter.formatNSign.call(options, 10, 0, '↑', '↓'), '↑10');
+      helper.assert(numberFormatter.formatNSign.call(options, 10000000000, 0, '↑', '↓'), '↑10,000,000,000');
+      helper.assert(numberFormatter.formatNSign.call(options, 10.12345, 0, '↑', '↓'), '↑10');
+      helper.assert(numberFormatter.formatNSign.call(options, 10000000000.12345, 0, '↑', '↓'), '↑10,000,000,000');
+      helper.assert(numberFormatter.formatNSign.call(options, -10, 2, '↑', '↓'), '↓10.00');
+      helper.assert(numberFormatter.formatNSign.call(options, -10000000000, 2, '↑', '↓'), '↓10,000,000,000.00');
+      helper.assert(numberFormatter.formatNSign.call(options, -10.12345, 2, '↑', '↓'), '↓10.12');
+      helper.assert(numberFormatter.formatNSign.call(options, -10000000000.12345, 2, '↑', '↓'), '↓10,000,000,000.12');
+    });
+  });
+
   describe('round', function () {
 
     it('should round number', function () {
